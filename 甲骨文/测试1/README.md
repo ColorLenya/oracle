@@ -12,8 +12,9 @@
 图片1
 
 <img src="C:\Users\ASUS\Desktop\oracle\img\1615821541118-1615866841634.png" alt="1615821541118" style="zoom:50%;" />
-
+！[图片文字]（https://github.com/ColorLenya/oracle/blob/main/oracle/img/1615821444031.png）
 图片2
+
 
 <img src="C:\Users\ASUS\Desktop\oracle\img\1615821444031.png" alt="1615821444031" style="zoom: 33%;" />
 
