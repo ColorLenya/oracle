@@ -23,7 +23,7 @@
 ## 样例查询语句结果 ##
 
 第一条查询语句结果：
-![Image text](https://github.com/ColorLenya/oracle/blob/main/test1/img/1615821541118-1615866841634.png)
+![Image text](./img/1615821541118-1615866841634.png)
 
 第二条查询语句结果：
 ![Image text](https://github.com/ColorLenya/oracle/blob/main/test1/img/1615821444031.png)
