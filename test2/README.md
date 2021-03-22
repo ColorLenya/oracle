@@ -36,9 +36,7 @@ SQL> exit
 
  语句“ALTER USER new_user QUOTA 50M ON users;”是指授权new_user用户访问users表空间，空间限额是50M。
  ## 实验截图：
- ![Image text](https://github.com/ColorLenya/oracle/blob/main/test2/img/L3G67TI%40%25G(X4Q%7BKHC8W4%60V.png)
- 
- ![Image text](https://github.com/ColorLenya/oracle/blob/main/test1/img/1615863933567.png)
+
  
 
 - 第2步：新用户new_user连接到pdborcl，创建表mytable和视图myview，插入数据，最后将myview的SELECT对象权限授予hr用户。
