@@ -1,7 +1,7 @@
 
 # 实验3：创建分区表
 
-## 姓名：李飞鸿，学号：201810513324
+## 姓名：殷入风，学号：201810414425
 
 
 
@@ -21,12 +21,12 @@
 
 ## 实验步骤
 
-1.首先创建自己的账号 new_cdu_lfh，然后以 system 身份登录: 
+1.首先创建自己的账号 new_yrf，然后以 system 身份登录: 
 
 ```sql
-    ALTER USER new_cdu_lfh QUOTA UNLIMITED ON USERS;
-    ALTER USER new_cdu_lfh QUOTA UNLIMITED ON USERS02;
-    ALTER USER new_cdu_lfh QUOTA UNLIMITED ON USERS03;
+    ALTER USER new_yrf QUOTA UNLIMITED ON USERS;
+    ALTER USER new_yrf_lfh QUOTA UNLIMITED ON USERS02;
+    ALTER USER new_yrf QUOTA UNLIMITED ON USERS03;
 ```
 
 ![image](./img/a.png) 
@@ -40,7 +40,7 @@
 ![image](./img/b.png) 
 
 ```sql
-    sqlplus new_cdu_lfh/123@localhost/pdborcl
+    sqlplus new_yrf/123@localhost/pdborcl
     @test3.sql
 ```
 ![image](./img/c.png)
