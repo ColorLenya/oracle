@@ -29,7 +29,7 @@
     ALTER USER new_yrf QUOTA UNLIMITED ON USERS03;
 ```
 
-![image](./img/a.png) 
+![image](./img/a .png) 
 
 2.用自己的账号new_cdu_lfh登录,并运行脚本文件 test3.sql: 
 
