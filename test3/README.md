@@ -29,7 +29,7 @@
     ALTER USER new_yrf QUOTA UNLIMITED ON USERS03;
 ```
 
-![image](./img/a.png) 
+![image](./img/1.png) 
 
 2.用自己的账号new_cdu_lfh登录,并运行脚本文件 test3.sql: 
 
@@ -37,20 +37,20 @@
     cat test3.sql
 ```
 
-![image](./img/b.png) 
+![image](./img/2.png) 
 
 ```sql
     sqlplus new_yrf/123@localhost/pdborcl
     @test3.sql
 ```
-![image](./img/c.png)
+![image](./img/3.png)
 
 
 
 
 ## 查看数据库的使用情况
 以下样例查看表空间的数据库文件，以及每个文件的磁盘占用情况。
-![image](./img/d.png)
+![image](./img/4.png)
 
 
 ## 实验总结
