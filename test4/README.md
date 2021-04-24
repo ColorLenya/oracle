@@ -8,7 +8,10 @@
 假设有一个生产某个产品的单位，单位接受网上订单进行产品的销售。通过实验模拟这个单位的部分信息：员工表，部门表，订单表，订单详单表。
 
 ## 实验内容：
-1.首先创建自己的账号 new_yrf，然后以 system 身份登录: 
+1.以system身份登录并创建new_yrf角色并授权：
+
+![image](./img/登录.png)
+3.首先创建自己的账号 new_yrf，然后以 system 身份登录: 
 
 ```sql
     ALTER USER new_yrf QUOTA UNLIMITED ON USERS;
