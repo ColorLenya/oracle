@@ -51,9 +51,19 @@ GRANT CREATE VIEW TO new_yrf WITH ADMIN OPTION;
 
 
 
-## 查看数据库的使用情况
-以下样例查看表空间的数据库文件，以及每个文件的磁盘占用情况。
-![image](./img/4.png)
+
+
+
+## 查寻表：
+开始测试，查询员工：
+![image](./img/开始测试，查询员工.png)
+查询分区情况和分区索引情况：
+![image](./img/查询分区情况和分区索引情况.png)
+查询一个分区的数据：
+![image](./img/查询一个分区的数据.png)
+表空间使用：
+![image](./img/表空间使用.png)
+
 
 
 ## 实验总结
