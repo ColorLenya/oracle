@@ -10,7 +10,7 @@
 ## 实验内容：
 1.以system身份登录并创建new_yrf角色并授权：
 
-![image](./img/登录.png)
+![image](./img/sys登录创建角色并授权.png)
 3.首先创建自己的账号 new_yrf，然后以 system 身份登录: 
 
 ```sql
