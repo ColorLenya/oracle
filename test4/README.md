@@ -40,19 +40,15 @@ GRANT CREATE VIEW TO new_yrf WITH ADMIN OPTION;
 
 ![image](./img/运行脚本文件.png) 
 
-2.用自己的账号new_yrf登录,并运行脚本文件 test3.sql: 
-
-```sql
-    cat test3.sql
-```
+3.用自己的账号new_yrf登录,并运行脚本文件 test4.sql: 
 
 ![image](./img/2.png) 
 
 ```sql
     sqlplus new_yrf/123@localhost/pdborcl
-    @test3.sql
+    @test4.sql
 ```
-![image](./img/3.png)
+![image](./img/用自己的账号登录运行脚本.png)
 
 
 
