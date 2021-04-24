@@ -31,7 +31,7 @@
 
 ![image](./img/1.png) 
 
-2.用自己的账号new_cdu_lfh登录,并运行脚本文件 test3.sql: 
+2.用自己的账号new_yrf登录,并运行脚本文件 test3.sql: 
 
 ```sql
     cat test3.sql
