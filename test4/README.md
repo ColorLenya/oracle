@@ -32,15 +32,13 @@ GRANT CREATE VIEW TO new_yrf WITH ADMIN OPTION;
 ```
 
 
-3.首先创建自己的账号 new_yrf，然后以 system 身份登录: 
+2.退出登录，查看脚本文件test4.sql: 
 
 ```sql
-    ALTER USER new_yrf QUOTA UNLIMITED ON USERS;
-    ALTER USER new_yrf_lfh QUOTA UNLIMITED ON USERS02;
-    ALTER USER new_yrf QUOTA UNLIMITED ON USERS03;
+    cat test4.sql
 ```
 
-![image](./img/1.png) 
+![image](./img/运行脚本文件.png) 
 
 2.用自己的账号new_yrf登录,并运行脚本文件 test3.sql: 
 
