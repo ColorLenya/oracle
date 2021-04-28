@@ -143,9 +143,12 @@ WHERE a.tablespace_name = b.tablespace_name
 ![image](./img/查询分区情况和分区索引情况.png)
 查询一个分区的数据：
 ![image](./img/查询一个分区的数据.png)
+统计用户的所有表并查询统计信息：
+![image](./统计用户的所有表并查询统计信息.png)
 表空间使用：
 ![image](./img/表空间使用.png)
-
+查看数据文件的大小：
+![image](./查看数据文件的大小.png)
 
 
 
