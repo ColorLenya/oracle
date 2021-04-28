@@ -1,157 +1,64 @@
-# 实验4：对象管理
+# 实验5：PL/SQL编程
+##  姓名：殷入风，学号：201810414425
 
-## 姓名：殷入风，学号：201810414425
+## 实验目的
 
-## 实验目的：
-了解Oracle表和视图的概念，学习使用SQL语句Create Table创建表，学习Select语句插入，修改，删除以及查询数据，学习使用SQL语句创建视图，学习部分存储过程和触发器的使用。
-## - 实验场景：
-假设有一个生产某个产品的单位，单位接受网上订单进行产品的销售。通过实验模拟这个单位的部分信息：员工表，部门表，订单表，订单详单表。
+    了解PL/SQL语言结构
+    了解PL/SQL变量和常量的声明和使用方法
+    学习条件语句的使用方法
+    学习分支语句的使用方法
+    学习循环语句的使用方法
+    学习常用的PL/SQL函数
+    学习包，过程，函数的用法。
 
-## 实验内容：
-1.以system身份登录并创建new_yrf角色并授权：
+## - 实验场景
+
+- 假设有一个生产某个产品的单位，单位接受网上订单进行产品的销售。通过实验模拟这个单位的部分信息：员工表，部门表，订单表，订单详单表。
+- 本实验以实验四为基础
+
+## 实验内容
+
+1. 创建一个包(Package)，包名是MyPack。
+2. 在MyPack中创建一个函数SaleAmount ，查询部门表，统计每个部门的销售总金额，每个部门的销售额是由该部门的员工(ORDERS.EMPLOYEE_ID)完成的销售额之和。函数SaleAmount要求输入的参数是部门号，输出部门的销售金额。
+3. 在MyPack中创建一个过程，在过程中使用游标，递归查询某个员工及其所有下属，子下属员工。过程的输入参数是员工号，输出员工的ID,姓名，销售总金额。信息用dbms_output包中的put或者put_line函数。输出的员工信息用左添加空格的多少表示员工的层次（LEVEL）。比如下面显示5个员工的信息：
+4. 由于订单只是按日期分区的，上述统计是全表搜索，因此统计速度会比较慢，如何提高统计的速度呢？
+
+   ```text
+    ID 姓名 销售总金额
+    =======================
+    2  张三  5000元
+    3 李四   6000元
+    4 王五   1000元
+        5 孙强  2000元
+    6  赵强东 5000 元
+    ```
+
+上述输出结果表示 2，6号两个员工是一个级别的，没有领导，3，4号员工的领导是2号，5号员工的领导是4号。
+Oracle递归查询的语句格式是：
+
+    ```sql
+    SELECT LEVEL,EMPLOYEE_ID,NAME,MANAGER_ID FROM employees 
+    START WITH EMPLOYEE_ID = V_EMPLOYEE_ID 
+    CONNECT BY PRIOR EMPLOYEE_ID = MANAGER_ID
+    ```
+
+## 实验过程：
+
+1.使用new_yrf用户登录，运行test5.sql脚本
+![image](./img/sys登录创建角色并授权.png)
+
+
+2.开始测试：运行函数Get_SaleAmount(V_DEPARTMENT_ID NUMBER)
 
 ![image](./img/sys登录创建角色并授权.png)
 
-```下面是创建用户new_yrf
-CREATE USER new_yrf IDENTIFIED BY 123
-DEFAULT TABLESPACE "USERS"
-TEMPORARY TABLESPACE "TEMP";
 
--- QUOTAS
-ALTER USER new_yrf QUOTA UNLIMITED ON USERS;
-ALTER USER new_yrf QUOTA UNLIMITED ON USERS02;
-ALTER USER new_yrf ACCOUNT UNLOCK;
+4.执行过程Get_Employees(V_EMPLOYEE_ID NUMBER)
 
--- ROLES
-GRANT "CONNECT" TO new_yrf WITH ADMIN OPTION;
-GRANT "RESOURCE" TO new_yrf WITH ADMIN OPTION;
-ALTER USER new_yrf DEFAULT ROLE "CONNECT","RESOURCE";
+![image](./img/sys登录创建角色并授权.png)
 
--- SYSTEM PRIVILEGES
-GRANT CREATE VIEW TO new_yrf WITH ADMIN OPTION;
-```
-
-
-2.退出登录，查看脚本文件test4.sql: 
-
-```sql
-    cat test4.sql
-```
-
-![image](./img/运行脚本文件.png) 
-
-3.用自己的用户new_yrf登录,并运行脚本文件 test4.sql: 
-
-```sql
-    sqlplus new_yrf/123@localhost/pdborcl
-    @test4.sql
-```
-![image](./img/用自己的账号登录运行脚本.png)
+## 实验总结
+经过本次实验，我学习到了解Oracle表和视图的概念，学习使用SQL语句Create Table创建表，学习Select语句插入，修改，删除以及查询数据，学习使用SQL语句创建视图，学习部分存储过程和触发器的使用。实验不难，只要跟着老师的调子走，就能顺利完成。
 
 
 
-## 测试代码：
-```
-一切就绪，开始测试：
-以下时间在0.02秒以内才正常：（id取值从1到20000000）
-select * from ORDERS where  order_id=1;
-select * from ORDER_DETAILS where  order_id=1;
-select * from VIEW_ORDER_DETAILS where order_id=1;
-
---2.递归查询某个员工及其所有下属，子下属员工。
-WITH A (EMPLOYEE_ID,NAME,EMAIL,PHONE_NUMBER,HIRE_DATE,SALARY,MANAGER_ID,DEPARTMENT_ID) AS
-  (SELECT EMPLOYEE_ID,NAME,EMAIL,PHONE_NUMBER,HIRE_DATE,SALARY,MANAGER_ID,DEPARTMENT_ID
-    FROM employees WHERE employee_ID = 11
-    UNION ALL
-  SELECT B.EMPLOYEE_ID,B.NAME,B.EMAIL,B.PHONE_NUMBER,B.HIRE_DATE,B.SALARY,B.MANAGER_ID,B.DEPARTMENT_ID
-    FROM A, employees B WHERE A.EMPLOYEE_ID = B.MANAGER_ID)
-SELECT * FROM A;
---或者
-SELECT * FROM employees START WITH EMPLOYEE_ID = 11 CONNECT BY PRIOR EMPLOYEE_ID = MANAGER_ID;
-
-
---特殊查询语句：
---查询分区表情况:
-select TABLE_NAME,PARTITION_NAME,HIGH_VALUE,PARTITION_POSITION,TABLESPACE_NAME from user_tab_partitions
---查询分区索引情况：
-select * from USER_IND_PARTITIONS;
-
-
---查询一个分区中的数据
-select count(*) from ORDERS partition(PARTITION_BEFORE_2016);
-select count(*) from ORDERS partition(PARTITION_BEFORE_2017);
---或者：
---select count(*) from ORDERS where order_date<to_date('2016-01-01','yyyy-mm-dd');
-
-select count(*) from ORDER_DETAILS partition(PARTITION_BEFORE_2016);
-select count(*) from ORDER_DETAILS partition(PARTITION_BEFORE_2017);
-
---收集表的统计信息dbms_stats.gather_table_stats
---也可以使用ANALYZE TABLE TableName COMPUTE STATISTICS; 但推荐使用dbms_stats.gather_table_stats
---分析单个表：
---exec dbms_stats.gather_table_stats(user,'ORDERS',cascade=>true); --cascade=true表示同时收集索引的信息
---exec dbms_stats.gather_table_stats(user,'ORDER_DETAILS',cascade=>true);
---统计用户的所有表：
-exec dbms_stats.gather_schema_stats(User,estimate_percent=>100,cascade=> TRUE); --estimate_percent采样行的百分比
-
---统计完成后，查询表的统计信息：
-select table_name,tablespace_name,num_rows from user_tables where table_name='ORDERS';
-select table_name,tablespace_name,num_rows from user_tables where table_name='ORDER_DETAILS';
-
-
-select * from orders where order_id=1300;
-select * from ORDER_DETAILS where order_id=1300;
-select * from orders where customer_name='zhang133000';
-select * from orders where order_date<to_date('2016-01-01','yyyy-mm-dd');
-
---查看数据文件的使用情况
-select * from dba_data_files;
-
---查看表空间的使用情况
-SELECT a.tablespace_name "表空间名",
-total "表空间大小",
-free "表空间剩余大小",
-(total - free) "表空间使用大小",
-total / (1024 * 1024 * 1024) "表空间大小(G)",
-free / (1024 * 1024 * 1024) "表空间剩余大小(G)",
-(total - free) / (1024 * 1024 * 1024) "表空间使用大小(G)",
-round((total - free) / total, 4) * 100 "使用率 %"
-FROM (SELECT tablespace_name, SUM(bytes) free
-FROM dba_free_space
-GROUP BY tablespace_name) a,
-(SELECT tablespace_name, SUM(bytes) total
-FROM dba_data_files
-GROUP BY tablespace_name) b
-WHERE a.tablespace_name = b.tablespace_name
-
---查看数据文件大小:
-[oracle@cdh3 ~]$ ls -lh /home/oracle/app/oracle/oradata/orcl/pdbtest/pdbtest_users*
--rw-r----- 1 oracle root 3.8G 11月  1 14:53 /home/oracle/app/oracle/oradata/orcl/pdbtest/pdbtest_users01_2.dbf
--rw-r----- 1 oracle root 2.4G 11月  1 14:53 /home/oracle/app/oracle/oradata/orcl/pdbtest/pdbtest_users01.dbf
--rw-r----- 1 oracle root 1.5G 11月  1 14:53 /home/oracle/app/oracle/oradata/orcl/pdbtest/pdbtest_users02_1.dbf
--rw-r----- 1 oracle root 2.5G 11月  1 14:53 /home/oracle/app/oracle/oradata/orcl/pdbtest/pdbtest_users02_2.dbf
-
-```
-
-
-
-
-## 查寻表：
-1.开始测试，查询员工：
-![image](./img/开始测试，查询员工.png)
-2.查询分区情况和分区索引情况：
-![image](./img/查询分区情况和分区索引情况.png)
-3.查询一个分区的数据：
-![image](./img/查询一个分区的数据.png)
-4.统计用户的所有表并查询统计信息：
-
-![image](./统计用户的所有表并查询统计信息.png)
-
-
-5.表空间使用：
-![image](./img/表空间使用.png)
-
-6.查看数据文件的大小：
-
-
-![image](./查看数据文件的大小.png)
